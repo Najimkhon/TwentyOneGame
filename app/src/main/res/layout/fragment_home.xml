@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/grisly_beast_font"
-        android:text="0"
+        android:text="2"
         android:textColor="@color/yellow"
         android:textSize="32sp"
         app:layout_constraintLeft_toLeftOf="@+id/tvPlayerCountLabel"

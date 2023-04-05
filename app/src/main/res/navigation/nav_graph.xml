@@ -9,7 +9,11 @@
         android:id="@+id/gameFragment"
         android:name="com.hfad.twentyonegame.ui.fragments.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <argument
+            android:name="playerCount"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.hfad.twentyonegame.ui.fragments.HomeFragment"

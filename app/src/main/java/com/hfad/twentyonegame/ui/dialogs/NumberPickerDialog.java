@@ -29,7 +29,7 @@ public class NumberPickerDialog extends DialogFragment {
 
         NumberPicker numberPicker = dialogBinding.numberPicker;
         numberPicker.setMaxValue(10);
-        numberPicker.setMinValue(1);
+        numberPicker.setMinValue(2);
 
         setCancelable(true);
         getDialog().setCanceledOnTouchOutside(true);

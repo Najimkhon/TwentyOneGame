@@ -12,11 +12,15 @@ import com.hfad.twentyonegame.databinding.FragmentGameBinding;
 public class GameFragment extends Fragment {
 
     private FragmentGameBinding binding;
+    private int playerCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
+        playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
+        
+
         return binding.getRoot();
     }
 }
