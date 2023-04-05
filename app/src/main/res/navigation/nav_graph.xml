@@ -13,6 +13,9 @@
         <argument
             android:name="playerCount"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_gameFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
