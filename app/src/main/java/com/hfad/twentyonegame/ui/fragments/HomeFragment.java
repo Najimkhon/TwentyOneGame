@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.hfad.twentyonegame.R;
 import com.hfad.twentyonegame.databinding.FragmentHomeBinding;
 import com.hfad.twentyonegame.ui.dialogs.DialogManager;
 
@@ -35,12 +39,20 @@ public class HomeFragment extends Fragment {
 
     private void setListeners(){
         binding.btnSelectNumber.setOnClickListener(view -> {
-            dialogManager.showNumberPickerDialog(new DialogManager.OnDialogClickListener() {
-                @Override
-                public void onSaveClicked(String input) {
-                    binding.tvPlayerCount.setText(input);
-                }
-            });
+            dialogManager.showNumberPickerDialog(input -> binding.tvPlayerCount.setText(input));
         });
+
+
+
+
+        binding.btnStart.setOnClickListener(view -> {
+            String playerCount = (String) binding.tvPlayerCount.getText();
+            if (Integer.parseInt(playerCount) == 0){
+                Toast.makeText(requireContext(), "Please, select number of players! " + playerCount, Toast.LENGTH_SHORT).show();
+            }else {
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_gameFragment);
+            }
+        });
+
     }
 }
