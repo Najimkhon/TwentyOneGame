@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.hfad.twentyonegame.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override

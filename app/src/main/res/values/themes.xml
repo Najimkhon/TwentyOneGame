@@ -17,7 +17,7 @@
     </style>
 
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColorPrimary">@color/yellow</item>
+        <item name="android:textColorPrimary">@color/darker_white</item>
         <item name="colorControlNormal">@color/darker_white</item>
     </style>
 </resources>

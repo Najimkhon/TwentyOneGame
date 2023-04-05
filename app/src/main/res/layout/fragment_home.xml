@@ -32,25 +32,52 @@
         android:id="@+id/tvHintLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please, choose the number of players!"
-        android:textSize="16sp"
-        android:textColor="@color/darker_white"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/grotley_regular"
+        android:text="Please, choose the number of players!"
+        android:textColor="@color/darker_white"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
         app:layout_constraintRight_toRightOf="@+id/tvTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <Button
+        android:id="@+id/btnSelectNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvHintLabel"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/dialog_bg"
+        android:text="SELECT NUmber"
         app:layout_constraintLeft_toLeftOf="@+id/tvHintLabel"
         app:layout_constraintRight_toRightOf="@+id/tvHintLabel"
-        android:layout_marginTop="32dp"
-        android:text="SELECT NUmber"
-        android:background="@drawable/dialog_bg"
-     />
+        app:layout_constraintTop_toBottomOf="@+id/tvHintLabel" />
+
+    <TextView
+        android:id="@+id/tvPlayerCountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/grotley_regular"
+        android:text="Player count:"
+        android:textColor="@color/darker_white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnSelectNumber"
+        app:layout_constraintRight_toRightOf="@+id/btnSelectNumber"
+        app:layout_constraintTop_toBottomOf="@+id/btnSelectNumber" />
+
+    <TextView
+        android:id="@+id/tvPlayerCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/grisly_beast_font"
+        android:text="0"
+        android:textColor="@color/yellow"
+        android:textSize="32sp"
+        app:layout_constraintLeft_toLeftOf="@+id/tvPlayerCountLabel"
+        app:layout_constraintRight_toRightOf="@+id/tvPlayerCountLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlayerCountLabel" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStart"
