@@ -19,7 +19,7 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
-        
+
 
         return binding.getRoot();
     }
