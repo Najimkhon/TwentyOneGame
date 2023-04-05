@@ -6,25 +6,78 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.hfad.twentyonegame.R;
 import com.hfad.twentyonegame.databinding.FragmentGameBinding;
+import com.hfad.twentyonegame.ui.viewmodels.GameViewModel;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class GameFragment extends Fragment {
 
     private FragmentGameBinding binding;
     private int playerCount;
+    private GameViewModel viewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+
         playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
         binding.btnStart.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_gameFragment_to_resultFragment);
         });
+        binding.tvPlayerName.setText(viewModel.randomNum + "");
+
+        viewModel.diceOneLiveData.observe(getViewLifecycleOwner(), diceSide -> {
+            binding.dice1.setImageResource(getDiceSideImage(diceSide));
+        });
+        viewModel.diceTwoLiveData.observe(getViewLifecycleOwner(), diceSide -> {
+            binding.dice2.setImageResource(getDiceSideImage(diceSide));
+        });
+        viewModel.diceThreeLiveData.observe(getViewLifecycleOwner(), diceSide -> {
+            binding.dice3.setImageResource(getDiceSideImage(diceSide));
+        });
+        viewModel.diceFourLiveData.observe(getViewLifecycleOwner(), diceSide -> {
+            binding.dice4.setImageResource(getDiceSideImage(diceSide));
+        });
+        binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newRound();
+            }
+        });
+
 
         return binding.getRoot();
+    }
+
+    private void newRound() {
+        viewModel.randomizeDice();
+    }
+
+    private int getDiceSideImage(int sideNum) {
+        switch (sideNum) {
+            case 1:
+                return R.drawable.dice_1;
+            case 2:
+                return R.drawable.dice_2;
+            case 3:
+                return R.drawable.dice_3;
+            case 4:
+                return R.drawable.dice_4;
+            case 5:
+                return R.drawable.dice_5;
+            case 6:
+                return R.drawable.dice_6;
+            default:
+                return -1;
+        }
     }
 }
