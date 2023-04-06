@@ -29,14 +29,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
-    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-    private String finalAdvertId;
-    private boolean isPermissionGranted = false;
-
     @Inject
     DialogManager dialogManager;
 
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+
+    private FragmentHomeBinding binding;
+    private String finalAdvertId;
+    private boolean isPermissionGranted;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,21 +44,42 @@ public class HomeFragment extends Fragment {
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             isPermissionGranted = true;
+            getAdvertisingId();
         } else {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
         }
 
         setListeners();
-        getAdvertisingId();
 
         return binding.getRoot();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                isPermissionGranted = true;
+                getAdvertisingId();
+                saveAdvertIdToFile(finalAdvertId);
+            } else {
+                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_SHORT).show();
+                isPermissionGranted = false;
+            }
+        }
+    }
+
     private void setListeners() {
-        binding.btnSelectNumber.setOnClickListener(view -> dialogManager.showNumberPickerDialog(input -> binding.tvPlayerCount.setText(input)));
+        binding.btnSelectNumber.setOnClickListener(view -> {
+                    dialogManager.showNumberPickerDialog(input ->
+                            binding.tvPlayerCount.setText(input)
+                    );
+                }
+        );
 
         binding.btnStart.setOnClickListener(view -> {
-            int playerCount = (int) Integer.parseInt(binding.tvPlayerCount.getText().toString());
+            String playerCountText = binding.tvPlayerCount.getText().toString();
+            int playerCount = (int) Integer.parseInt(playerCountText);
+
             HomeFragmentDirections.ActionHomeFragmentToGameFragment action = HomeFragmentDirections.actionHomeFragmentToGameFragment(playerCount);
             Navigation.findNavController(view).navigate(action);
         });
@@ -74,10 +95,10 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
             String advertId = null;
-            try{
+            try {
                 assert idInfo != null;
                 advertId = idInfo.getId();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
@@ -88,7 +109,7 @@ public class HomeFragment extends Fragment {
                     new Handler().postDelayed(() -> {
                         Toast.makeText(requireContext(), finalAdvertId, Toast.LENGTH_LONG).show();
                         Toast.makeText(requireContext(), "Advertising ID saved successfully", Toast.LENGTH_LONG).show();
-                    }, 10000); // Delay for 10 seconds
+                    }, 10_000); // Delay for 10 seconds
                 } else {
                     Toast.makeText(requireContext(), "Failed to get advertising ID", Toast.LENGTH_LONG).show();
                 }
@@ -121,19 +142,5 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).start();
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_WRITE_EXTERNAL_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                isPermissionGranted = true;
-                saveAdvertIdToFile(finalAdvertId);
-            } else {
-                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_SHORT).show();
-                isPermissionGranted = false;
-            }
-        }
     }
 }

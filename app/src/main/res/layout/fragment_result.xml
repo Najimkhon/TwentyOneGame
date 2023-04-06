@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.ResultFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Winner!"
-        android:textSize="32sp"
-        app:layout_constraintTop_toBottomOf="@id/ivCup"
-        app:layout_constraintRight_toRightOf="@id/ivCup"
-        app:layout_constraintLeft_toLeftOf="@id/ivCup"
         android:fontFamily="@font/grisly_beast_font"
-        android:textColor="@color/yellow"/>
+        android:text="Winner!"
+        android:textColor="@color/yellow"
+        android:textSize="32sp"
+        app:layout_constraintLeft_toLeftOf="@id/ivCup"
+        app:layout_constraintRight_toRightOf="@id/ivCup"
+        app:layout_constraintTop_toBottomOf="@id/ivCup" />
+
     <ImageView
         android:id="@+id/ivCup"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/winners_cup"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/winnerAvatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ivCup"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/player_1"
         app:civ_border_color="@color/yellow"
         app:civ_border_width="2dp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/ivCup"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/winnerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/winnerAvatar"
-        app:layout_constraintRight_toRightOf="@+id/winnerAvatar"
-        app:layout_constraintLeft_toLeftOf="@id/winnerAvatar"
+        android:layout_marginTop="4dp"
         android:text="Player Name"
         android:textColor="@color/darker_white"
-        android:layout_marginTop="4dp"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/winnerAvatar"
+        app:layout_constraintRight_toRightOf="@+id/winnerAvatar"
+        app:layout_constraintTop_toBottomOf="@id/winnerAvatar" />
+
     <TextView
         android:id="@+id/winnerScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/winnerName"
-        app:layout_constraintRight_toRightOf="@+id/winnerName"
-        app:layout_constraintLeft_toLeftOf="@id/winnerName"
-        android:text="Score: 21"
-        android:textColor="@color/yellow"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/grotley_regular"
-        android:textSize="16sp" />
+        android:text="Score: 21"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/winnerName"
+        app:layout_constraintRight_toRightOf="@+id/winnerName"
+        app:layout_constraintTop_toBottomOf="@id/winnerName" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStart"

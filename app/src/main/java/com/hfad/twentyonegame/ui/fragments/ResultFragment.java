@@ -24,6 +24,7 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentResultBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
 

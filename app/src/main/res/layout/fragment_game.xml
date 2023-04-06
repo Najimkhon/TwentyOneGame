@@ -52,11 +52,11 @@
         android:text="Score: 16"
         android:textColor="@color/darker_white"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/dice1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName" />
 
     <TextView
         android:id="@+id/tvPlayerName"
@@ -135,9 +135,9 @@
         android:fontFamily="@font/grotley_regular"
         android:text="Next player"
         android:textSize="24sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,25 +1,17 @@
 package com.hfad.twentyonegame.ui.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.hfad.twentyonegame.R;
 import com.hfad.twentyonegame.databinding.FragmentGameBinding;
-import com.hfad.twentyonegame.models.Player;
 import com.hfad.twentyonegame.ui.viewmodels.GameViewModel;
-
-import java.io.IOException;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -49,7 +41,6 @@ public class GameFragment extends Fragment {
             binding.tvRound.setText(round + "");
         });
 
-
         binding.btnThrow.setOnClickListener(view -> {
             throwDice();
         });
@@ -58,7 +49,7 @@ public class GameFragment extends Fragment {
             nextPlayer();
         });
 
-        viewModel.isLastTurn.observe(getViewLifecycleOwner(), isLastTurn -> {
+        viewModel.isLastTurnLiveData.observe(getViewLifecycleOwner(), isLastTurn -> {
             if (isLastTurn) {
                 Navigation.findNavController(getView()).navigate(R.id.action_gameFragment_to_resultFragment);
             }
@@ -68,7 +59,7 @@ public class GameFragment extends Fragment {
     }
 
     private void throwDice() {
-        viewModel.isScoreCalculated.observe(getViewLifecycleOwner(), isCalculated -> {
+        viewModel.isScoreCalculatedLiveData.observe(getViewLifecycleOwner(), isCalculated -> {
             if (isCalculated) {
                 binding.tvScore.setVisibility(View.VISIBLE);
                 binding.btnThrow.setVisibility(View.INVISIBLE);
@@ -83,7 +74,6 @@ public class GameFragment extends Fragment {
         binding.btnNextPlayer.setEnabled(false);
 
         viewModel.takeTurn();
-
     }
 
     private void nextPlayer() {
