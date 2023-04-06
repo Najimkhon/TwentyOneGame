@@ -42,16 +42,21 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            isPermissionGranted = true;
-            getAdvertisingId();
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
-        }
-
         setListeners();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            isPermissionGranted = true;
+            getAdvertisingId();
+            saveAdvertIdToFile(finalAdvertId);
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
     }
 
     @Override
@@ -61,8 +66,10 @@ public class HomeFragment extends Fragment {
                 isPermissionGranted = true;
                 getAdvertisingId();
                 saveAdvertIdToFile(finalAdvertId);
+                Toast.makeText(requireContext(), "Permission accepted to write to external storage", Toast.LENGTH_LONG).show();
+                System.out.print("hop: Permission accepted to write to external storage");
             } else {
-                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_LONG).show();
                 isPermissionGranted = false;
             }
         }
