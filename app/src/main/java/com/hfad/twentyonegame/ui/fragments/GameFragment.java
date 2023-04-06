@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -34,7 +35,7 @@ public class GameFragment extends Fragment {
         setDiceObservers();
 
         binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
-        viewModel.roundLiveData.observe(getViewLifecycleOwner(), round->{
+        viewModel.roundLiveData.observe(getViewLifecycleOwner(), round -> {
             binding.tvRound.setText(round + "");
         });
 
@@ -47,8 +48,8 @@ public class GameFragment extends Fragment {
             nextPlayer();
         });
 
-        viewModel.isLastTurn.observe(getViewLifecycleOwner(), isLastTurn->{
-            if (isLastTurn){
+        viewModel.isLastTurn.observe(getViewLifecycleOwner(), isLastTurn -> {
+            if (isLastTurn) {
                 Navigation.findNavController(getView()).navigate(R.id.action_gameFragment_to_resultFragment);
             }
         });
@@ -57,11 +58,17 @@ public class GameFragment extends Fragment {
     }
 
     private void throwDice() {
-        binding.tvScore.setVisibility(View.VISIBLE);
-        binding.btnThrow.setVisibility(View.INVISIBLE);
-        binding.btnNextPlayer.setVisibility(View.VISIBLE);
+        viewModel.isScoreCalculated.observe(getViewLifecycleOwner(), isCalculated -> {
+            if (isCalculated) {
+                binding.tvScore.setVisibility(View.VISIBLE);
+                binding.btnThrow.setVisibility(View.INVISIBLE);
+                binding.btnNextPlayer.setVisibility(View.VISIBLE);
+                binding.tvScore.setText("Your score :" + viewModel.currentPlayer.getScore());
+            }
+        });
+        binding.tvScore.setVisibility(View.INVISIBLE);
         viewModel.takeTurn();
-        binding.tvScore.setText("Your score :"+ viewModel.currentPlayer.getScore());
+
     }
 
     private void nextPlayer() {
