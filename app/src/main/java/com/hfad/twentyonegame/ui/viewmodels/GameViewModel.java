@@ -26,7 +26,6 @@ public class GameViewModel extends ViewModel {
     public GameViewModel() {
     }
 
-
     public MutableLiveData<Integer> diceOneLiveData = new MutableLiveData<>();
     public MutableLiveData<Integer> diceTwoLiveData = new MutableLiveData<>();
     public MutableLiveData<Integer> diceThreeLiveData = new MutableLiveData<>();
@@ -62,7 +61,7 @@ public class GameViewModel extends ViewModel {
             return false;
         }
     });
-    
+
     private void randomizeDice() {
         diceOneLiveData.setValue(getRandomDiceSide());
         diceTwoLiveData.setValue(getRandomDiceSide());

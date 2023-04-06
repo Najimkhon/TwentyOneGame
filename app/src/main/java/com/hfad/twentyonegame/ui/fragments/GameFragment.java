@@ -64,9 +64,14 @@ public class GameFragment extends Fragment {
                 binding.btnThrow.setVisibility(View.INVISIBLE);
                 binding.btnNextPlayer.setVisibility(View.VISIBLE);
                 binding.tvScore.setText("Your score :" + viewModel.currentPlayer.getScore());
+                binding.btnThrow.setEnabled(true);
+                binding.btnNextPlayer.setEnabled(true);
             }
         });
         binding.tvScore.setVisibility(View.INVISIBLE);
+        binding.btnThrow.setEnabled(false);
+        binding.btnNextPlayer.setEnabled(false);
+
         viewModel.takeTurn();
 
     }
