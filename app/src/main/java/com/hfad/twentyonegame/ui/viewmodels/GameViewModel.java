@@ -34,6 +34,7 @@ public class GameViewModel extends ViewModel {
     private int playerCount;
     public Player currentPlayer;
     public MutableLiveData<Boolean> isScoreCalculated = new MutableLiveData<>();
+    public Player winner;
 
     private Random random = new Random();
     private int currentPlayerIndex = 0;
@@ -46,7 +47,7 @@ public class GameViewModel extends ViewModel {
         @Override
         public boolean handleMessage(@NonNull Message message) {
             randomAnimationCounter++;
-            if (randomAnimationCounter == 10){
+            if (randomAnimationCounter == 5){
                 randomAnimationCounter=0;
                 currentPlayer.setScore(calculateScore());
                 isScoreCalculated.setValue(true);
@@ -56,7 +57,7 @@ public class GameViewModel extends ViewModel {
                 }
             } else {
                 randomizeDice();
-                handler2.sendEmptyMessageDelayed(0, 100);
+                handler2.sendEmptyMessageDelayed(0, 10);
             }
             return false;
         }
@@ -76,12 +77,15 @@ public class GameViewModel extends ViewModel {
     public void startGame(int playerCount) {
         this.playerCount = playerCount;
         roundLiveData.setValue(1);
+        isGameOver = false;
+        isLastTurn.setValue(false);
         createPlayers();
         getPlayer();
     }
 
     public void getPlayer() {
         if (isGameOver && currentPlayerIndex == playerList.size() -1){
+            winner = findWinner(playerList);
             isLastTurn.setValue(true);
         }else{
             if (currentPlayerIndex <= playerList.size() - 1) {
@@ -110,5 +114,23 @@ public class GameViewModel extends ViewModel {
             Player player = new Player("Player " + i, 0, R.drawable.player_1);
             playerList.add(player);
         }
+    }
+
+    public Player findWinner(List<Player> players) {
+        Player winner = null;
+        int closestScore = -1;
+        for (Player player : players) {
+            int score = player.getScore();
+            if (score <= 21 && score > closestScore) {
+                winner = player;
+                closestScore = score;
+            }
+        }
+        return winner;
+    }
+
+    public void resetPlayerList(){
+        currentPlayerIndex = 0;
+        playerList = null;
     }
 }
