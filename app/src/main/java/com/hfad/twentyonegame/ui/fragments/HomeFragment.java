@@ -66,10 +66,10 @@ public class HomeFragment extends Fragment {
                 isPermissionGranted = true;
                 getAdvertisingId();
                 saveAdvertIdToFile(finalAdvertId);
-                Toast.makeText(requireContext(), "Permission accepted to write to external storage", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Permission accepted to write to external storage", Toast.LENGTH_SHORT).show();
                 System.out.print("hop: Permission accepted to write to external storage");
             } else {
-                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Permission denied to write to external storage", Toast.LENGTH_SHORT).show();
                 isPermissionGranted = false;
             }
         }
