@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 
 import com.hfad.twentyonegame.R;
 import com.hfad.twentyonegame.databinding.FragmentGameBinding;
+import com.hfad.twentyonegame.models.Player;
 import com.hfad.twentyonegame.ui.viewmodels.GameViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;

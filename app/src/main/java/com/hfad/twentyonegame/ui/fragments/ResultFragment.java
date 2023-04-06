@@ -31,7 +31,6 @@ public class ResultFragment extends Fragment {
         binding.winnerName.setText(viewModel.winner.getName());
         binding.btnStart.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_resultFragment_to_homeFragment);
-            viewModel.resetPlayerList();
         });
 
         return binding.getRoot();

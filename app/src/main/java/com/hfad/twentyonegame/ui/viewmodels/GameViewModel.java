@@ -75,6 +75,7 @@ public class GameViewModel extends ViewModel {
     }
 
     public void startGame(int playerCount) {
+        resetPlayerList();
         this.playerCount = playerCount;
         roundLiveData.setValue(1);
         isGameOver = false;
@@ -91,12 +92,17 @@ public class GameViewModel extends ViewModel {
             if (currentPlayerIndex <= playerList.size() - 1) {
                 currentPlayer = playerList.get(currentPlayerIndex);
             } else {
-                int currentRound = roundLiveData.getValue();
-                roundLiveData.setValue(currentRound + 1);
-                currentPlayerIndex = 0;
-                currentPlayer = playerList.get(currentPlayerIndex);
+                finishRound();
             }
         }
+    }
+
+    private void finishRound() {
+        int currentRound = roundLiveData.getValue();
+        roundLiveData.setValue(currentRound + 1);
+        currentPlayerIndex = 0;
+        changeStarterPlayerToNext();
+        currentPlayer = playerList.get(currentPlayerIndex);
     }
 
     public void takeTurn() {
@@ -114,6 +120,13 @@ public class GameViewModel extends ViewModel {
             Player player = new Player("Player " + i, 0, R.drawable.player_1);
             playerList.add(player);
         }
+    }
+
+
+    private void changeStarterPlayerToNext(){
+        Player starterPlayer = playerList.get(0);
+        playerList.remove(0);
+        playerList.add(starterPlayer);
     }
 
     public Player findWinner(List<Player> players) {
