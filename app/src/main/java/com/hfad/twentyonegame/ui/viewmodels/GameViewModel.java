@@ -85,24 +85,24 @@ public class GameViewModel extends ViewModel {
     }
 
     public void getPlayer() {
-        if (isGameOver && currentPlayerIndex == playerList.size() -1){
-            winner = findWinner(playerList);
-            isLastTurn.setValue(true);
-        }else{
             if (currentPlayerIndex <= playerList.size() - 1) {
                 currentPlayer = playerList.get(currentPlayerIndex);
             } else {
                 finishRound();
             }
-        }
     }
 
     private void finishRound() {
-        int currentRound = roundLiveData.getValue();
-        roundLiveData.setValue(currentRound + 1);
-        currentPlayerIndex = 0;
-        changeStarterPlayerToNext();
-        currentPlayer = playerList.get(currentPlayerIndex);
+        if (isGameOver){
+            winner = findWinner(playerList);
+            isLastTurn.setValue(true);
+        } else {
+            int currentRound = roundLiveData.getValue();
+            roundLiveData.setValue(currentRound + 1);
+            currentPlayerIndex = 0;
+            changeStarterPlayerToNext();
+            currentPlayer = playerList.get(currentPlayerIndex);
+        }
     }
 
     public void takeTurn() {
