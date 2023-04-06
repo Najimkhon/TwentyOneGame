@@ -40,8 +40,6 @@ public class GameFragment extends Fragment {
 
         viewModel.startGame(playerCount);
 
-        getAdvertisingId();
-
         setDiceObservers();
 
         binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
@@ -126,38 +124,5 @@ public class GameFragment extends Fragment {
             default:
                 return -1;
         }
-    }
-
-    private void getAdvertisingId(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AdvertisingIdClient.Info idInfo = null;
-                try {
-                    idInfo = AdvertisingIdClient.getAdvertisingIdInfo(requireContext());
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                String advertId = null;
-                try{
-                    advertId = idInfo.getId();
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-
-                try {
-                    Thread.sleep(10000); // sleep for 10 seconds
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                final String finalAdvertId = advertId;
-                getActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Your ad Id: "+ finalAdvertId, Toast.LENGTH_LONG).show());
-            }
-        }).start();
     }
 }
