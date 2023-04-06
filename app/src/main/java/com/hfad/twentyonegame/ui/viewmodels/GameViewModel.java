@@ -57,7 +57,7 @@ public class GameViewModel extends ViewModel {
                 }
             } else {
                 randomizeDice();
-                handler2.sendEmptyMessageDelayed(0, 10);
+                handler2.sendEmptyMessageDelayed(0, 100);
             }
             return false;
         }
