@@ -1,13 +1,10 @@
 package com.hfad.twentyonegame.ui.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -32,12 +29,9 @@ public class GameFragment extends Fragment {
 
         playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
 
-
         viewModel.startGame(playerCount);
 
         setDiceObservers();
-
-
 
         binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
         viewModel.roundLiveData.observe(getViewLifecycleOwner(), round->{
@@ -53,6 +47,11 @@ public class GameFragment extends Fragment {
             nextPlayer();
         });
 
+        viewModel.isLastTurn.observe(getViewLifecycleOwner(), isLastTurn->{
+            if (isLastTurn){
+                Navigation.findNavController(getView()).navigate(R.id.action_gameFragment_to_resultFragment);
+            }
+        });
 
         return binding.getRoot();
     }

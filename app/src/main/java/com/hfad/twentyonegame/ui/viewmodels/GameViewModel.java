@@ -34,6 +34,7 @@ public class GameViewModel extends ViewModel {
     private int currentPlayerIndex = 0;
     public MutableLiveData<Integer> roundLiveData = new MutableLiveData<>();
     private boolean isGameOver = false;
+    public MutableLiveData<Boolean> isLastTurn = new MutableLiveData<>();
 
 
     private void randomizeDice() {
@@ -55,13 +56,17 @@ public class GameViewModel extends ViewModel {
     }
 
     public void getPlayer() {
-        if (currentPlayerIndex <= playerList.size() - 1) {
-            currentPlayer = playerList.get(currentPlayerIndex);
-        } else {
-            int currentRound = roundLiveData.getValue();
-            roundLiveData.setValue(currentRound + 1);
-            currentPlayerIndex = 0;
-            currentPlayer = playerList.get(currentPlayerIndex);
+        if (isGameOver && currentPlayerIndex == playerList.size() -1){
+            isLastTurn.setValue(true);
+        }else{
+            if (currentPlayerIndex <= playerList.size() - 1) {
+                currentPlayer = playerList.get(currentPlayerIndex);
+            } else {
+                int currentRound = roundLiveData.getValue();
+                roundLiveData.setValue(currentRound + 1);
+                currentPlayerIndex = 0;
+                currentPlayer = playerList.get(currentPlayerIndex);
+            }
         }
     }
 
@@ -69,6 +74,9 @@ public class GameViewModel extends ViewModel {
         randomizeDice();
         currentPlayer.setScore(calculateScore());
         currentPlayerIndex++;
+        if (calculateScore()>=21){
+            isGameOver = true;
+        }
     }
 
     private int calculateScore() {
