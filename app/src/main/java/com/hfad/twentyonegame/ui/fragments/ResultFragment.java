@@ -29,6 +29,7 @@ public class ResultFragment extends Fragment {
 
         binding.winnerScore.setText("Score: " + viewModel.winner.getScore());
         binding.winnerName.setText(viewModel.winner.getName());
+        binding.winnerAvatar.setImageResource(viewModel.winner.getAvatarRes());
         binding.btnStart.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_resultFragment_to_homeFragment);
         });

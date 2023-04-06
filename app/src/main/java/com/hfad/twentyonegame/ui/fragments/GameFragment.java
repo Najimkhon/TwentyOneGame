@@ -43,6 +43,8 @@ public class GameFragment extends Fragment {
         setDiceObservers();
 
         binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
+        binding.ivAvatar.setImageResource(viewModel.currentPlayer.getAvatarRes());
+
         viewModel.roundLiveData.observe(getViewLifecycleOwner(), round -> {
             binding.tvRound.setText(round + "");
         });
@@ -90,6 +92,7 @@ public class GameFragment extends Fragment {
         binding.btnNextPlayer.setVisibility(View.INVISIBLE);
         viewModel.getPlayer();
         binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
+        binding.ivAvatar.setImageResource(viewModel.currentPlayer.getAvatarRes());
     }
 
     private void setDiceObservers() {
