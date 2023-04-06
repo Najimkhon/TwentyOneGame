@@ -1,18 +1,25 @@
 package com.hfad.twentyonegame.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.hfad.twentyonegame.R;
 import com.hfad.twentyonegame.databinding.FragmentGameBinding;
 import com.hfad.twentyonegame.models.Player;
 import com.hfad.twentyonegame.ui.viewmodels.GameViewModel;
+
+import java.io.IOException;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -32,6 +39,8 @@ public class GameFragment extends Fragment {
         playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
 
         viewModel.startGame(playerCount);
+
+        getAdvertisingId();
 
         setDiceObservers();
 
@@ -117,5 +126,38 @@ public class GameFragment extends Fragment {
             default:
                 return -1;
         }
+    }
+
+    private void getAdvertisingId(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AdvertisingIdClient.Info idInfo = null;
+                try {
+                    idInfo = AdvertisingIdClient.getAdvertisingIdInfo(requireContext());
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String advertId = null;
+                try{
+                    advertId = idInfo.getId();
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    Thread.sleep(10000); // sleep for 10 seconds
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                final String finalAdvertId = advertId;
+                getActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "Your ad Id: "+ finalAdvertId, Toast.LENGTH_LONG).show());
+            }
+        }).start();
     }
 }

@@ -21,6 +21,7 @@ public class HomeFragment extends Fragment {
     @Inject
     DialogManager dialogManager;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
