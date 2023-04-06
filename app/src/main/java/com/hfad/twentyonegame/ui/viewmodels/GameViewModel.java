@@ -117,7 +117,7 @@ public class GameViewModel extends ViewModel {
     private void createPlayers() {
         playerList = new ArrayList<>();
         for (int i = 1; i <= playerCount; i++) {
-            Player player = new Player("Player " + i, 0, R.drawable.player_1);
+            Player player = new Player(i + "", 0);
             playerList.add(player);
         }
     }

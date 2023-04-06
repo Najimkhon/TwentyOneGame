@@ -1,18 +1,19 @@
 package com.hfad.twentyonegame.models;
 
+import com.hfad.twentyonegame.R;
+
 public class Player {
-    private String name;
+    private String id;
     private int score;
     private int avatarRes;
 
-    public Player(String name, int score, int avatarRes) {
-        this.name = name;
+    public Player(String id, int score) {
+        this.id = id;
         this.score = score;
-        this.avatarRes = avatarRes;
     }
 
     public String getName() {
-        return name;
+        return "Player "+ id;
     }
 
     public int getScore() {
@@ -23,6 +24,38 @@ public class Player {
     }
 
     public int getAvatarRes() {
+        switch(id) {
+            case "1":
+                avatarRes = R.drawable.player_1;
+                break;
+            case "2":
+                avatarRes = R.drawable.player_2;
+                break;
+            case "3":
+                avatarRes = R.drawable.player_3;
+                break;
+            case "4":
+                avatarRes = R.drawable.player_4;
+                break;
+            case "5":
+                avatarRes = R.drawable.player_5;
+                break;
+            case "6":
+                avatarRes = R.drawable.player_6;
+                break;
+            case "7":
+                avatarRes = R.drawable.player_7;
+                break;
+            case "8":
+                avatarRes = R.drawable.player_8;
+                break;
+            case "9":
+                avatarRes = R.drawable.player_9;
+                break;
+            case "10":
+                avatarRes = R.drawable.player_10;
+                break;
+        }
         return avatarRes;
     }
 }
