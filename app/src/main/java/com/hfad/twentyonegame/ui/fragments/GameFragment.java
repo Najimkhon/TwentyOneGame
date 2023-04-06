@@ -1,6 +1,7 @@
 package com.hfad.twentyonegame.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,49 @@ public class GameFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
 
         playerCount = GameFragmentArgs.fromBundle(getArguments()).getPlayerCount();
-        binding.btnStart.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_gameFragment_to_resultFragment);
-        });
-        binding.tvPlayerName.setText(viewModel.randomNum + "");
 
+
+        viewModel.startGame(playerCount);
+
+        setDiceObservers();
+
+
+
+        binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
+        viewModel.roundLiveData.observe(getViewLifecycleOwner(), round->{
+            binding.tvRound.setText(round + "");
+        });
+
+
+        binding.btnThrow.setOnClickListener(view -> {
+            throwDice();
+        });
+
+        binding.btnNextPlayer.setOnClickListener(view -> {
+            nextPlayer();
+        });
+
+
+        return binding.getRoot();
+    }
+
+    private void throwDice() {
+        binding.tvScore.setVisibility(View.VISIBLE);
+        binding.btnThrow.setVisibility(View.INVISIBLE);
+        binding.btnNextPlayer.setVisibility(View.VISIBLE);
+        viewModel.takeTurn();
+        binding.tvScore.setText("Your score :"+ viewModel.currentPlayer.getScore());
+    }
+
+    private void nextPlayer() {
+        binding.tvScore.setVisibility(View.INVISIBLE);
+        binding.btnThrow.setVisibility(View.VISIBLE);
+        binding.btnNextPlayer.setVisibility(View.INVISIBLE);
+        viewModel.getPlayer();
+        binding.tvPlayerName.setText(viewModel.currentPlayer.getName());
+    }
+
+    private void setDiceObservers() {
         viewModel.diceOneLiveData.observe(getViewLifecycleOwner(), diceSide -> {
             binding.dice1.setImageResource(getDiceSideImage(diceSide));
         });
@@ -47,19 +86,6 @@ public class GameFragment extends Fragment {
         viewModel.diceFourLiveData.observe(getViewLifecycleOwner(), diceSide -> {
             binding.dice4.setImageResource(getDiceSideImage(diceSide));
         });
-        binding.ivAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newRound();
-            }
-        });
-
-
-        return binding.getRoot();
-    }
-
-    private void newRound() {
-        viewModel.randomizeDice();
     }
 
     private int getDiceSideImage(int sideNum) {
